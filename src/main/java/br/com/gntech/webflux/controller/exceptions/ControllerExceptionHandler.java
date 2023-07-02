@@ -46,7 +46,6 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(BAD_REQUEST).body(Mono.just(error));
     }
 
-
     private String verifyDupKey(String message) {
         if (message.contains("email dup key")) {
             return "email already registered";

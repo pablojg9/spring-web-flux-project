@@ -19,4 +19,9 @@ public class UserService {
     public Mono<User> save(final UserRequest userRequest) {
         return repository.save(mapper.toEntity(userRequest));
     }
+
+    public Mono<User> findById(String id) {
+        return repository.findById(id);
+    }
+
 }
