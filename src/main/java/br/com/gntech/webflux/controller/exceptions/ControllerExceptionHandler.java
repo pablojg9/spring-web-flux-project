@@ -1,6 +1,9 @@
 package br.com.gntech.webflux.controller.exceptions;
 
+import br.com.gntech.webflux.WebFluxApplication;
+import br.com.gntech.webflux.service.exception.ObjectNotFoundException;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -8,10 +11,12 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.support.WebExchangeBindException;
+import org.springframework.web.client.HttpClientErrorException;
 import reactor.core.publisher.Mono;
 
 import static java.time.LocalDateTime.now;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
@@ -45,6 +50,8 @@ public class ControllerExceptionHandler {
 
         return ResponseEntity.status(BAD_REQUEST).body(Mono.just(error));
     }
+
+
 
     private String verifyDupKey(String message) {
         if (message.contains("email dup key")) {
